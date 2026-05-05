@@ -3,6 +3,7 @@ package com.trello.app.service.impl;
 import com.trello.app.dto.UserRequestDTO;
 import com.trello.app.dto.UserResponseDTO;
 import com.trello.app.entity.User;
+import com.trello.app.exception.ResourceAlreadyExistsException;
 import com.trello.app.repository.UserRepository;
 import com.trello.app.service.UserService;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
         // 1. Check if user exists
         userRepository.findByEmail(request.getEmail())
                 .ifPresent(u -> {
-                    throw new RuntimeException("Email already exists");
+                    throw new ResourceAlreadyExistsException("Email already exists");
                 });
 
         // 2. Create entity
